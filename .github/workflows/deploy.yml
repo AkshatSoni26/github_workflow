@@ -22,7 +22,7 @@ jobs:
           key: ${{ secrets.KEY }}
           port: 22
           script: |
-            # Verify the deploy.sh script exists
+            # Check if deploy.sh exists and run it if found
             if [ -f /root/server/lexomat/deploy.sh ]; then
               echo "deploy.sh found"
               cd /root/server/lexomat && ./deploy.sh
@@ -30,3 +30,21 @@ jobs:
               echo "deploy.sh not found"
               exit 1
             fi
+
+            # Additional inline deployment commands:
+            echo "Changing directory to the backend..."
+            cd /root/server/lexomat/backend/ || { echo "Directory not found"; exit 1; }
+
+            echo "Pulling latest code from origin main..."
+            git pull origin main
+
+            echo "Updating PATH to include local binaries..."
+            export PATH="$HOME/.local/bin:$PATH"
+
+            echo "Syncing project environment using uv..."
+            uv sync
+
+            echo "Restarting FastAPI via supervisor..."
+            sudo supervisorctl restart lexomat
+
+            echo "Deployment complete."
