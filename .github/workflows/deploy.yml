@@ -22,15 +22,6 @@ jobs:
           key: ${{ secrets.KEY }}
           port: 22
           script: |
-            # Check if deploy.sh exists and run it if found
-            if [ -f /root/server/lexomat/deploy.sh ]; then
-              echo "deploy.sh found"
-              cd /root/server/lexomat && ./deploy.sh
-            else
-              echo "deploy.sh not found"
-              exit 1
-            fi
-
             # Additional inline deployment commands:
             echo "Changing directory to the backend..."
             cd /root/server/lexomat/backend/ || { echo "Directory not found"; exit 1; }
