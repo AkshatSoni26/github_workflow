@@ -22,7 +22,5 @@ jobs:
           key: ${{ secrets.KEY }}
           port: 22
           script: |
-            cd ./server/lexomat/backend/
-            git pull origin main
-            make install-dev
-            sudo supervisorctl restart lexomat
+            # Change directory to where deploy.sh is located, then run it.
+            cd /root/root/server/lexomat && ./deploy.sh
