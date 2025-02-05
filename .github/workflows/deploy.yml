@@ -23,4 +23,4 @@ jobs:
           port: 22
           script: |
             # Change directory to where deploy.sh is located, then run it.
-            cd /root/root/server/lexomat && ./deploy.sh
+            cd /root/server/lexomat && ./deploy.sh
